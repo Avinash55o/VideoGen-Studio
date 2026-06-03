@@ -1,0 +1,36 @@
+{
+  "name": "videogen-studio",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "app",
+    "web"
+  ],
+  "scripts": {
+    "dev:web": "cd web && npm run dev",
+    "dev:server": "uvicorn backend.main:app --reload --port 17493",
+    "dev": "npm run dev:server & npm run dev:web",
+    "build:web": "cd web && npm run build",
+    "lint": "biome lint .",
+    "typecheck": "tsc -p app/tsconfig.json --noEmit && cd web && tsc --noEmit",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "ci": "npm run typecheck && npm run build:web"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.12",
+    "@types/node": "^20.0.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "loaders.css": "^0.1.2",
+    "react-loaders": "^3.0.1"
+  }
+}
