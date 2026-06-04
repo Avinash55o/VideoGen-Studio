@@ -13,12 +13,8 @@ logger = logging.getLogger(__name__)
 
 def get_video_model_configs():
     """Return model configs for all video backends."""
-    configs = []
-    from ..backends.video.cogvideo_backend import CogVideoBackend
-    from ..backends.video.wan_backend import WanBackend
-    configs.extend(CogVideoBackend.MODEL_CONFIGS)
-    configs.extend(WanBackend.MODEL_CONFIGS)
-    return configs
+    from ..backends import get_video_model_configs as get_configs
+    return get_configs()
 
 
 async def run_video_generation(
@@ -46,7 +42,7 @@ async def run_video_generation(
         backend = get_video_backend(model)
 
         if not backend.is_loaded():
-            await backend.load_model("default")
+            await backend.load_model(model)
 
         async def progress_callback(current: int, total: int):
             progress.update_progress(
@@ -97,3 +93,13 @@ async def run_video_generation(
             if clip:
                 clip.end_time_ms = 2000
                 db.commit()
+    finally:
+        if image_path:
+            try:
+                from ..config import resolve_storage_path
+                resolved_img = resolve_storage_path(image_path)
+                if resolved_img and resolved_img.exists() and "frame_last_" in resolved_img.name:
+                    resolved_img.unlink()
+                    logger.info("Cleaned up temporary parent frame: %s", resolved_img)
+            except Exception as e:
+                logger.warning("Failed to delete temporary frame %s: %s", image_path, e)

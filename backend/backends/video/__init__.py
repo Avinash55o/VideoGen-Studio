@@ -46,9 +46,21 @@ def get_video_backend(engine: str) -> VideoBackend:
         if engine == "cogvideo" or engine == "cogvideo-2b":
             from .cogvideo_backend import CogVideoBackend
             backend = CogVideoBackend()
-        elif engine == "wan-t2v":
+        elif engine == "wan-t2v" or engine == "wan-i2v":
             from .wan_backend import WanBackend
             backend = WanBackend()
+        elif engine == "ltx":
+            from .ltx_backend import LTXVideoBackend
+            backend = LTXVideoBackend()
+        elif engine == "hunyuan":
+            from .hunyuan_backend import HunyuanVideoBackend
+            backend = HunyuanVideoBackend()
+        elif engine == "mochi":
+            from .mochi_backend import MochiBackend
+            backend = MochiBackend()
+        elif engine == "svd":
+            from .svd_backend import StableVideoDiffusionBackend
+            backend = StableVideoDiffusionBackend()
         else:
             raise ValueError(f"Unknown video engine: {engine}")
 

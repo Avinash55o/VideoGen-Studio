@@ -105,24 +105,36 @@ class CogVideoBackend:
         await asyncio.to_thread(self._load_model_sync, model_size)
 
     def _load_model_sync(self, model_size: str) -> None:
-        from diffusers import CogVideoXPipeline
         from backend.backends.base import is_model_cached, model_load_progress
+
+        resolved_size = "2B"
+        if model_size in ("cogvideo-5b", "cogvideo-5b-i2v", "5B"):
+            resolved_size = "5B"
 
         repo = self._hf_repo_for_size(model_size)
         logger.info("Loading CogVideoX from %s", repo)
 
-        model_name = "cogvideo-2b-t2v" if model_size == "2B" else "cogvideo-5b-i2v"
+        model_name = "cogvideo-2b-t2v" if resolved_size == "2B" else "cogvideo-5b-i2v"
         is_cached = is_model_cached(repo)
 
         with model_load_progress(model_name, is_cached):
-            self._pipe = CogVideoXPipeline.from_pretrained(
-                repo,
-                torch_dtype=self._dtype,
-                variant="bf16" if self._dtype == torch.bfloat16 else "fp16",
-            )
+            if resolved_size == "5B":
+                from diffusers import CogVideoXImageToVideoPipeline
+                self._pipe = CogVideoXImageToVideoPipeline.from_pretrained(
+                    repo,
+                    torch_dtype=self._dtype,
+                    variant="bf16" if self._dtype == torch.bfloat16 else "fp16",
+                )
+            else:
+                from diffusers import CogVideoXPipeline
+                self._pipe = CogVideoXPipeline.from_pretrained(
+                    repo,
+                    torch_dtype=self._dtype,
+                    variant="bf16" if self._dtype == torch.bfloat16 else "fp16",
+                )
             self._apply_memory_optimizations()
-            self._model_size = model_size
-            logger.info("CogVideoX model loaded (size=%s, device=%s)", model_size, self._device)
+            self._model_size = resolved_size
+            logger.info("CogVideoX model loaded (size=%s, device=%s)", resolved_size, self._device)
 
     async def generate(
         self,

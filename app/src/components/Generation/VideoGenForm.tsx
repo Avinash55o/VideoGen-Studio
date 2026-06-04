@@ -6,10 +6,12 @@ import { GenerateButton } from './GenerateButton';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import { apiClient } from '@/lib/api/client';
 import { useGenerationProgress } from '@/lib/hooks/useGeneration';
 import type { ClipResponse } from '@/lib/api/types';
 import { useQueryClient } from '@tanstack/react-query';
+import { useProjectStore } from '@/stores/projectStore';
 
 interface VideoGenFormProps {
   projectId: string;
@@ -20,17 +22,26 @@ interface VideoGenFormProps {
 export function VideoGenForm({ projectId, onClipCreated: _onClipCreated }: VideoGenFormProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const clips = useProjectStore((s) => s.clips);
+  
   const [prompt, setPrompt] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
-  const [model, setModel] = useState('cogvideo-2b');
+  const [model, setModel] = useState('cogvideo-2b-t2v');
   const [numFrames, setNumFrames] = useState(24);
   const [guidanceScale, setGuidanceScale] = useState(7);
   const [steps, setSteps] = useState(50);
   const [seed, setSeed] = useState<number | undefined>(undefined);
+  const [continueFromPrev, setContinueFromPrev] = useState(false);
   const [taskId, setTaskId] = useState<string | null>(null);
 
   const { progress, status } = useGenerationProgress(taskId);
   const isGenerating = status === 'generating' || status === 'queued';
+
+  // Filter video clips with valid generated media files
+  const videoClips = clips
+    .filter((c) => c.clip_type === 'video' && c.source_path)
+    .sort((a, b) => b.end_time_ms - a.end_time_ms);
+  const latestVideoClip = videoClips[0];
 
   useEffect(() => {
     if (status === 'complete') {
@@ -41,6 +52,7 @@ export function VideoGenForm({ projectId, onClipCreated: _onClipCreated }: Video
       });
       setTaskId(null);
       setPrompt('');
+      setContinueFromPrev(false);
     } else if (status === 'error') {
       toast({
         title: 'Video generation failed',
@@ -64,6 +76,7 @@ export function VideoGenForm({ projectId, onClipCreated: _onClipCreated }: Video
         guidance_scale: guidanceScale,
         num_inference_steps: steps,
         seed,
+        parent_clip_id: (continueFromPrev && latestVideoClip) ? latestVideoClip.id : undefined,
       });
 
       setTaskId(response.task_id);
@@ -93,6 +106,27 @@ export function VideoGenForm({ projectId, onClipCreated: _onClipCreated }: Video
       </div>
 
       <ModelSelector value={model} onChange={setModel} />
+
+      {latestVideoClip && (
+        <div className="flex items-start space-x-2 py-2 bg-muted/40 p-2 rounded-md border border-border">
+          <Checkbox
+            id="continue-from-prev"
+            checked={continueFromPrev}
+            onCheckedChange={(checked) => setContinueFromPrev(!!checked)}
+          />
+          <div className="grid gap-1.5 leading-none">
+            <label
+              htmlFor="continue-from-prev"
+              className="text-xs font-semibold leading-none cursor-pointer"
+            >
+              Continue from previous clip
+            </label>
+            <p className="text-[11px] text-muted-foreground leading-normal">
+              Stitches generation to start from the last frame of the previous clip (ends at {(latestVideoClip.end_time_ms / 1000).toFixed(1)}s).
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="space-y-2">
         <Label>Frames: {numFrames}</Label>

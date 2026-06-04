@@ -643,6 +643,7 @@ export interface VideoGenerationRequest {
   num_inference_steps: number;
   seed?: number;
   image_path?: string;
+  parent_clip_id?: string;
 }
 
 export interface VideoGenerationResponse {

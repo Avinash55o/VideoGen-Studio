@@ -130,6 +130,7 @@ class VideoGenerationRequest(BaseModel):
     num_inference_steps: int = Field(default=50, ge=1, le=200)
     seed: Optional[int] = None
     image_path: Optional[str] = None
+    parent_clip_id: Optional[str] = None
 
 
 class VideoGenerationResponse(BaseModel):
