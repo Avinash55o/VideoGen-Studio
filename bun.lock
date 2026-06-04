@@ -1,0 +1,267 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 0,
+  "workspaces": {
+    "": {
+      "name": "videogen-studio",
+      "dependencies": {
+        "loaders.css": "^0.1.2",
+        "react-loaders": "^3.0.1",
+      },
+      "devDependencies": {
+        "@biomejs/biome": "2.3.12",
+        "@types/node": "^20.0.0",
+        "tailwindcss": "^4.1.18",
+        "typescript": "^5.6.0",
+      },
+    },
+    "app": {
+      "name": "@videogen/app",
+      "version": "0.5.0",
+      "dependencies": {
+        "@dnd-kit/core": "^6.3.1",
+        "@dnd-kit/sortable": "^10.0.0",
+        "@dnd-kit/utilities": "^3.2.2",
+        "@hookform/resolvers": "^3.9.0",
+        "@radix-ui/react-alert-dialog": "^1.1.1",
+        "@radix-ui/react-avatar": "^1.1.0",
+        "@radix-ui/react-dialog": "^1.1.1",
+        "@radix-ui/react-dropdown-menu": "^2.1.1",
+        "@radix-ui/react-label": "^2.1.0",
+        "@radix-ui/react-popover": "^1.1.1",
+        "@radix-ui/react-progress": "^1.1.0",
+        "@radix-ui/react-scroll-area": "^1.1.0",
+        "@radix-ui/react-select": "^2.1.1",
+        "@radix-ui/react-separator": "^1.1.0",
+        "@radix-ui/react-slider": "^1.3.6",
+        "@radix-ui/react-slot": "^1.1.0",
+        "@radix-ui/react-tabs": "^1.1.0",
+        "@radix-ui/react-toast": "^1.2.1",
+        "@tanstack/react-query": "^5.0.0",
+        "@tanstack/react-query-devtools": "^5.0.0",
+        "@tanstack/react-router": "^1.157.16",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.1",
+        "date-fns": "^3.6.0",
+        "framer-motion": "^12.29.0",
+        "i18next": "^26.0.6",
+        "i18next-browser-languagedetector": "^8.2.1",
+        "lucide-react": "^0.454.0",
+        "motion": "^12.29.0",
+        "react": "^18.3.0",
+        "react-dom": "^18.3.0",
+        "react-hook-form": "^7.53.0",
+        "react-i18next": "^17.0.4",
+        "react-sound-visualizer": "^1.4.0",
+        "tailwind-merge": "^2.5.4",
+        "wavesurfer.js": "^7.0.0",
+        "zod": "^3.23.8",
+        "zustand": "^4.5.0",
+      },
+      "devDependencies": {
+        "@tailwindcss/vite": "^4.1.18",
+        "@types/react": "^18.3.0",
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react": "^4.3.0",
+        "tailwindcss": "^4.1.0",
+        "typescript": "^5.6.0",
+        "vite": "^5.4.0",
+      },
+    },
+    "web": {
+      "name": "@videogen/web",
+      "version": "0.5.0",
+      "dependencies": {
+        "@tanstack/react-query": "^5.0.0",
+        "react": "^18.3.0",
+        "react-dom": "^18.3.0",
+        "wavesurfer.js": "^7.0.0",
+        "zustand": "^4.5.0",
+      },
+      "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "@types/react": "^18.3.0",
+        "@types/react-dom": "^18.3.0",
+        "@typescript-eslint/eslint-plugin": "^7.0.0",
+        "@typescript-eslint/parser": "^7.0.0",
+        "@vitejs/plugin-react": "^4.3.0",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.0",
+        "typescript": "^5.6.0",
+        "vite": "^5.4.0",
+      },
+    },
+  },
+  "packages": {
+    "@biomejs/biome": ["@biomejs/biome@2.3.12", "", { "optionalDependencies": { "@biomejs/cli-darwin-arm64": "2.3.12", "@biomejs/cli-darwin-x64": "2.3.12", "@biomejs/cli-linux-arm64": "2.3.12", "@biomejs/cli-linux-arm64-musl": "2.3.12", "@biomejs/cli-linux-x64": "2.3.12", "@biomejs/cli-linux-x64-musl": "2.3.12", "@biomejs/cli-win32-arm64": "2.3.12", "@biomejs/cli-win32-x64": "2.3.12" }, "bin": { "biome": "bin/biome" } }, "sha512-AR7h4aSlAvXj7TAajW/V12BOw2EiS0AqZWV5dGozf4nlLoUF/ifvD0+YgKSskT0ylA6dY1A8AwgP8kZ6yaCQnA=="],
+
+    "@biomejs/cli-darwin-arm64": ["@biomejs/cli-darwin-arm64@2.3.12", "", { "os": "darwin", "cpu": "arm64" }, "sha512-cO6fn+KiMBemva6EARDLQBxeyvLzgidaFRJi8G7OeRqz54kWK0E+uSjgFaiHlc3DZYoa0+1UFE8mDxozpc9ieg=="],
+
+    "@biomejs/cli-darwin-x64": ["@biomejs/cli-darwin-x64@2.3.12", "", { "os": "darwin", "cpu": "x64" }, "sha512-/fiF/qmudKwSdvmSrSe/gOTkW77mHHkH8Iy7YC2rmpLuk27kbaUOPa7kPiH5l+3lJzTUfU/t6x1OuIq/7SGtxg=="],
+
+    "@biomejs/cli-linux-arm64": ["@biomejs/cli-linux-arm64@2.3.12", "", { "os": "linux", "cpu": "arm64" }, "sha512-nbOsuQROa3DLla5vvsTZg+T5WVPGi9/vYxETm9BOuLHBJN3oWQIg3MIkE2OfL18df1ZtNkqXkH6Yg9mdTPem7A=="],
+
+    "@biomejs/cli-linux-arm64-musl": ["@biomejs/cli-linux-arm64-musl@2.3.12", "", { "os": "linux", "cpu": "arm64" }, "sha512-aqkeSf7IH+wkzFpKeDVPSXy9uDjxtLpYA6yzkYsY+tVjwFFirSuajHDI3ul8en90XNs1NA0n8kgBrjwRi5JeyA=="],
+
+    "@biomejs/cli-linux-x64": ["@biomejs/cli-linux-x64@2.3.12", "", { "os": "linux", "cpu": "x64" }, "sha512-CQtqrJ+qEEI8tgRSTjjzk6wJAwfH3wQlkIGsM5dlecfRZaoT+XCms/mf7G4kWNexrke6mnkRzNy6w8ebV177ow=="],
+
+    "@biomejs/cli-linux-x64-musl": ["@biomejs/cli-linux-x64-musl@2.3.12", "", { "os": "linux", "cpu": "x64" }, "sha512-kVGWtupRRsOjvw47YFkk5mLiAdpCPMWBo1jOwAzh+juDpUb2sWarIp+iq+CPL1Wt0LLZnYtP7hH5kD6fskcxmg=="],
+
+    "@biomejs/cli-win32-arm64": ["@biomejs/cli-win32-arm64@2.3.12", "", { "os": "win32", "cpu": "arm64" }, "sha512-Re4I7UnOoyE4kHMqpgtG6UvSBGBbbtvsOvBROgCCoH7EgANN6plSQhvo2W7OCITvTp7gD6oZOyZy72lUdXjqZg=="],
+
+    "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.3.12", "", { "os": "win32", "cpu": "x64" }, "sha512-qqGVWqNNek0KikwPZlOIoxtXgsNGsX+rgdEzgw82Re8nF02W+E2WokaQhpF5TdBh/D/RQ3TLppH+otp6ztN0lw=="],
+
+    "@types/node": ["@types/node@20.19.41", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-ECymXOukMnOoVkC2bb1Vc/w/836DXncOg5m8Xj1RH7xSHZJWNYY6Zh7EH477vcnD5egKNNfy2RpNOmuChhFPgQ=="],
+
+    "@videogen/app": ["@videogen/app@workspace:app"],
+
+    "@videogen/web": ["@videogen/web@workspace:web"],
+
+    "classnames": ["classnames@2.5.1", "", {}, "sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow=="],
+
+    "js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
+
+    "loaders.css": ["loaders.css@0.1.2", "", {}, "sha512-Rhowlq24ey1VOeor+3wYOt9+MjaxBOJm1u4KlQgNC3+0xJ0LS4wq4iG57D/BPzvuD/7HHDGQOWJ+81oR2EI9bQ=="],
+
+    "loose-envify": ["loose-envify@1.4.0", "", { "dependencies": { "js-tokens": "^3.0.0 || ^4.0.0" }, "bin": { "loose-envify": "cli.js" } }, "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="],
+
+    "object-assign": ["object-assign@4.1.1", "", {}, "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="],
+
+    "prop-types": ["prop-types@15.8.1", "", { "dependencies": { "loose-envify": "^1.4.0", "object-assign": "^4.1.1", "react-is": "^16.13.1" } }, "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="],
+
+    "react": ["react@19.2.7", "", {}, "sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ=="],
+
+    "react-is": ["react-is@16.13.1", "", {}, "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="],
+
+    "react-loaders": ["react-loaders@3.0.1", "", { "dependencies": { "classnames": "^2.2.3" }, "peerDependencies": { "prop-types": ">=15.6.0", "react": ">=15" } }, "sha512-4igMNqs9Fb3d4Z+0UHIGQNJsw/37gX0nUO8QxupnEKRn1dtyYC1LGwk5GuaoDciMQCQc/MmPwb4Fn6ZfdoX1FQ=="],
+
+    "tailwindcss": ["tailwindcss@4.3.0", "", {}, "sha512-y6nxMGB1nMW9R6k96e5gdIFzcfL/gTJRNaqGes1YvkLnPVXzWgbqFF2yLC0T8G774n24cx3Pe8XrKoniCOAH+Q=="],
+
+    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
+
+    "undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+
+    "@videogen/app/@dnd-kit/core": ["@dnd-kit/core@file:app/node_modules/@dnd-kit/core", {}],
+
+    "@videogen/app/@dnd-kit/sortable": ["@dnd-kit/sortable@file:app/node_modules/@dnd-kit/sortable", {}],
+
+    "@videogen/app/@dnd-kit/utilities": ["@dnd-kit/utilities@file:app/node_modules/@dnd-kit/utilities", {}],
+
+    "@videogen/app/@hookform/resolvers": ["@hookform/resolvers@file:app/node_modules/@hookform/resolvers", {}],
+
+    "@videogen/app/@radix-ui/react-alert-dialog": ["@radix-ui/react-alert-dialog@file:app/node_modules/@radix-ui/react-alert-dialog", {}],
+
+    "@videogen/app/@radix-ui/react-avatar": ["@radix-ui/react-avatar@file:app/node_modules/@radix-ui/react-avatar", {}],
+
+    "@videogen/app/@radix-ui/react-dialog": ["@radix-ui/react-dialog@file:app/node_modules/@radix-ui/react-dialog", {}],
+
+    "@videogen/app/@radix-ui/react-dropdown-menu": ["@radix-ui/react-dropdown-menu@file:app/node_modules/@radix-ui/react-dropdown-menu", {}],
+
+    "@videogen/app/@radix-ui/react-label": ["@radix-ui/react-label@file:app/node_modules/@radix-ui/react-label", {}],
+
+    "@videogen/app/@radix-ui/react-popover": ["@radix-ui/react-popover@file:app/node_modules/@radix-ui/react-popover", {}],
+
+    "@videogen/app/@radix-ui/react-progress": ["@radix-ui/react-progress@file:app/node_modules/@radix-ui/react-progress", {}],
+
+    "@videogen/app/@radix-ui/react-scroll-area": ["@radix-ui/react-scroll-area@file:app/node_modules/@radix-ui/react-scroll-area", {}],
+
+    "@videogen/app/@radix-ui/react-select": ["@radix-ui/react-select@file:app/node_modules/@radix-ui/react-select", {}],
+
+    "@videogen/app/@radix-ui/react-separator": ["@radix-ui/react-separator@file:app/node_modules/@radix-ui/react-separator", {}],
+
+    "@videogen/app/@radix-ui/react-slider": ["@radix-ui/react-slider@file:app/node_modules/@radix-ui/react-slider", {}],
+
+    "@videogen/app/@radix-ui/react-slot": ["@radix-ui/react-slot@file:app/node_modules/@radix-ui/react-slot", {}],
+
+    "@videogen/app/@radix-ui/react-tabs": ["@radix-ui/react-tabs@file:app/node_modules/@radix-ui/react-tabs", {}],
+
+    "@videogen/app/@radix-ui/react-toast": ["@radix-ui/react-toast@file:app/node_modules/@radix-ui/react-toast", {}],
+
+    "@videogen/app/@tailwindcss/vite": ["@tailwindcss/vite@file:app/node_modules/@tailwindcss/vite", {}],
+
+    "@videogen/app/@tanstack/react-query": ["@tanstack/react-query@file:app/node_modules/@tanstack/react-query", {}],
+
+    "@videogen/app/@tanstack/react-query-devtools": ["@tanstack/react-query-devtools@file:app/node_modules/@tanstack/react-query-devtools", {}],
+
+    "@videogen/app/@tanstack/react-router": ["@tanstack/react-router@file:app/node_modules/@tanstack/react-router", {}],
+
+    "@videogen/app/@types/react": ["@types/react@file:app/node_modules/@types/react", {}],
+
+    "@videogen/app/@types/react-dom": ["@types/react-dom@file:app/node_modules/@types/react-dom", {}],
+
+    "@videogen/app/@vitejs/plugin-react": ["@vitejs/plugin-react@file:app/node_modules/@vitejs/plugin-react", {}],
+
+    "@videogen/app/class-variance-authority": ["class-variance-authority@file:app/node_modules/class-variance-authority", {}],
+
+    "@videogen/app/clsx": ["clsx@file:app/node_modules/clsx", {}],
+
+    "@videogen/app/date-fns": ["date-fns@file:app/node_modules/date-fns", {}],
+
+    "@videogen/app/framer-motion": ["framer-motion@file:app/node_modules/framer-motion", {}],
+
+    "@videogen/app/i18next": ["i18next@file:app/node_modules/i18next", {}],
+
+    "@videogen/app/i18next-browser-languagedetector": ["i18next-browser-languagedetector@file:app/node_modules/i18next-browser-languagedetector", {}],
+
+    "@videogen/app/lucide-react": ["lucide-react@file:app/node_modules/lucide-react", {}],
+
+    "@videogen/app/motion": ["motion@file:app/node_modules/motion", {}],
+
+    "@videogen/app/react": ["react@file:app/node_modules/react", {}],
+
+    "@videogen/app/react-dom": ["react-dom@file:app/node_modules/react-dom", {}],
+
+    "@videogen/app/react-hook-form": ["react-hook-form@file:app/node_modules/react-hook-form", {}],
+
+    "@videogen/app/react-i18next": ["react-i18next@file:app/node_modules/react-i18next", {}],
+
+    "@videogen/app/react-sound-visualizer": ["react-sound-visualizer@file:app/node_modules/react-sound-visualizer", {}],
+
+    "@videogen/app/tailwind-merge": ["tailwind-merge@file:app/node_modules/tailwind-merge", {}],
+
+    "@videogen/app/tailwindcss": ["tailwindcss@file:app/node_modules/tailwindcss", {}],
+
+    "@videogen/app/typescript": ["typescript@file:app/node_modules/typescript", {}],
+
+    "@videogen/app/vite": ["vite@file:app/node_modules/vite", {}],
+
+    "@videogen/app/wavesurfer.js": ["wavesurfer.js@file:app/node_modules/wavesurfer.js", {}],
+
+    "@videogen/app/zod": ["zod@file:app/node_modules/zod", {}],
+
+    "@videogen/app/zustand": ["zustand@file:app/node_modules/zustand", {}],
+
+    "@videogen/web/@tailwindcss/vite": ["@tailwindcss/vite@file:web/node_modules/@tailwindcss/vite", {}],
+
+    "@videogen/web/@tanstack/react-query": ["@tanstack/react-query@file:web/node_modules/@tanstack/react-query", {}],
+
+    "@videogen/web/@types/react": ["@types/react@file:web/node_modules/@types/react", {}],
+
+    "@videogen/web/@types/react-dom": ["@types/react-dom@file:web/node_modules/@types/react-dom", {}],
+
+    "@videogen/web/@typescript-eslint/eslint-plugin": ["@typescript-eslint/eslint-plugin@file:web/node_modules/@typescript-eslint/eslint-plugin", {}],
+
+    "@videogen/web/@typescript-eslint/parser": ["@typescript-eslint/parser@file:web/node_modules/@typescript-eslint/parser", {}],
+
+    "@videogen/web/@vitejs/plugin-react": ["@vitejs/plugin-react@file:web/node_modules/@vitejs/plugin-react", {}],
+
+    "@videogen/web/eslint": ["eslint@file:web/node_modules/eslint", {}],
+
+    "@videogen/web/eslint-plugin-react-hooks": ["eslint-plugin-react-hooks@file:web/node_modules/eslint-plugin-react-hooks", {}],
+
+    "@videogen/web/eslint-plugin-react-refresh": ["eslint-plugin-react-refresh@file:web/node_modules/eslint-plugin-react-refresh", {}],
+
+    "@videogen/web/react": ["react@file:web/node_modules/react", {}],
+
+    "@videogen/web/react-dom": ["react-dom@file:web/node_modules/react-dom", {}],
+
+    "@videogen/web/typescript": ["typescript@file:web/node_modules/typescript", {}],
+
+    "@videogen/web/vite": ["vite@file:web/node_modules/vite", {}],
+
+    "@videogen/web/wavesurfer.js": ["wavesurfer.js@file:web/node_modules/wavesurfer.js", {}],
+
+    "@videogen/web/zustand": ["zustand@file:web/node_modules/zustand", {}],
+  }
+}
