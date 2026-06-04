@@ -95,6 +95,10 @@ class CogVideoBackend:
         return 128
 
     async def load_model(self, model_size: str) -> None:
+        import asyncio
+        await asyncio.to_thread(self._load_model_sync, model_size)
+
+    def _load_model_sync(self, model_size: str) -> None:
         from diffusers import CogVideoXPipeline
 
         repo = self._hf_repo_for_size(model_size)

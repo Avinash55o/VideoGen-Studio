@@ -48,6 +48,10 @@ class WanBackend:
         self._dtype = torch.bfloat16
 
     async def load_model(self, model_size: str) -> None:
+        import asyncio
+        await asyncio.to_thread(self._load_model_sync, model_size)
+
+    def _load_model_sync(self, model_size: str) -> None:
         from diffusers import WanPipeline
 
         repo = "Wan-AI/Wan2.1-T2V-1.3B"
