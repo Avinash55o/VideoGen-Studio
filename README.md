@@ -10,9 +10,6 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/Avinash55o/VideoGen-Studio">GitHub</a>
-</p>
 
 ---
 
