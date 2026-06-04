@@ -17,7 +17,7 @@ import {
   Unplug,
   X,
 } from 'lucide-react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   AlertDialog,
@@ -42,7 +42,6 @@ import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/components/ui/use-toast';
 import { apiClient } from '@/lib/api/client';
 import type { ActiveDownloadTask, HuggingFaceModelInfo, ModelStatus } from '@/lib/api/types';
-import { useModelDownloadToast } from '@/lib/hooks/useModelDownloadToast';
 import { usePlatform } from '@/platform/PlatformContext';
 import { useServerStore } from '@/stores/serverStore';
 
@@ -257,13 +256,27 @@ export function ModelManagement() {
     [queryClient, downloadingModel],
   );
 
-  useModelDownloadToast({
-    modelName: downloadingModel || '',
-    displayName: downloadingDisplayName || '',
-    enabled: !!downloadingModel && !!downloadingDisplayName,
-    onComplete: handleDownloadComplete,
-    onError: handleDownloadError,
-  });
+  // Monitor downloadingModel state and transition it to complete or error when the task finishes
+  useEffect(() => {
+    if (!downloadingModel) return;
+
+    const activeTask = activeTasks?.downloads.find((d) => d.model_name === downloadingModel);
+
+    if (activeTask) {
+      if (activeTask.status === 'error') {
+        handleDownloadError(activeTask.error || 'Unknown error');
+      }
+    } else {
+      if (activeTasks) {
+        const model = modelStatus?.models.find((m) => m.model_name === downloadingModel);
+        if (model?.downloaded) {
+          handleDownloadComplete();
+        } else {
+          handleDownloadComplete();
+        }
+      }
+    }
+  }, [activeTasks, downloadingModel, modelStatus, handleDownloadComplete, handleDownloadError]);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [modelToDelete, setModelToDelete] = useState<{

@@ -760,7 +760,7 @@ def get_model_load_func(config: ModelConfig):
         from .video import get_video_backend
         return lambda: get_video_backend(config.engine).load_model(config.model_size)
 
-    return lambda: get_tts_backend_for_engine(config.engine).load_model()
+    return lambda: get_tts_backend_for_engine(config.engine).load_model(config.model_size)
 
 
 def get_tts_backend() -> TTSBackend:
