@@ -1,7 +1,3 @@
-<div align="center">
-  <img src=".github/assets/icon-dark.webp" alt="VideoGen Studio" width="120" height="120" />
-</div>
-
 <h1 align="center">VideoGen Studio</h1>
 
 <p align="center">
@@ -9,17 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Avinash55o/VideoGen-Studio/releases">
-    <img src="https://img.shields.io/github/downloads/Avinash55o/VideoGen-Studio/total?style=flat&color=blue" alt="Downloads" />
-  </a>
-  <a href="https://github.com/Avinash55o/VideoGen-Studio/releases/latest">
-    <img src="https://img.shields.io/github/v/release/Avinash55o/VideoGen-Studio?style=flat" alt="Release" />
-  </a>
   <a href="https://github.com/Avinash55o/VideoGen-Studio/stargazers">
     <img src="https://img.shields.io/github/stars/Avinash55o/VideoGen-Studio?style=flat" alt="Stars" />
-  </a>
-  <a href="https://github.com/Avinash55o/VideoGen-Studio/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/Avinash55o/VideoGen-Studio?style=flat" alt="License" />
   </a>
 </p>
 
