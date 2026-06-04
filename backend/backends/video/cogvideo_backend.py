@@ -71,6 +71,7 @@ class CogVideoBackend:
 
     def _apply_memory_optimizations(self) -> None:
         vram_gb = get_vram_gb()
+        is_5b = self._model_size == "5B"
 
         if vram_gb is not None and vram_gb < 8:
             raise RuntimeError(
@@ -78,17 +79,27 @@ class CogVideoBackend:
                 f"CogVideoX requires at least 8 GB VRAM. Use the CPU backend instead."
             )
 
-        if vram_gb is not None and vram_gb < 12:
-            logger.info("VRAM <12GB: enabling sequential CPU offload and VAE slicing")
-            self._pipe.enable_sequential_cpu_offload()
-            self._pipe.vae.enable_slicing()
-            self._pipe.vae.enable_tiling()
-        elif vram_gb is not None and vram_gb < 24:
-            logger.info("VRAM <24GB: enabling model CPU offload")
-            self._pipe.enable_model_cpu_offload()
-        else:
-            logger.info("VRAM >=24GB: full GPU mode")
-            self._pipe.to(self._device)
+        if is_5b:
+            if vram_gb is not None and vram_gb < 12:
+                logger.info("VRAM <12GB for 5B model: enabling sequential CPU offload and VAE tiling")
+                self._pipe.enable_sequential_cpu_offload()
+                self._pipe.vae.enable_tiling()
+            elif vram_gb is not None and vram_gb < 20:
+                logger.info("VRAM <20GB for 5B model: enabling model CPU offload")
+                self._pipe.enable_model_cpu_offload()
+            else:
+                logger.info("VRAM >=20GB for 5B model: full GPU mode")
+                self._pipe.to(self._device)
+        else:  # 2B model
+            if vram_gb is not None and vram_gb < 8:
+                logger.info("VRAM <8GB for 2B model: enabling sequential CPU offload")
+                self._pipe.enable_sequential_cpu_offload()
+            elif vram_gb is not None and vram_gb < 12:
+                logger.info("VRAM <12GB for 2B model: enabling model CPU offload")
+                self._pipe.enable_model_cpu_offload()
+            else:
+                logger.info("VRAM >=12GB for 2B model: full GPU mode (no CPU offload)")
+                self._pipe.to(self._device)
 
     def max_frames_for_vram(self) -> int:
         vram_gb = get_vram_gb()

@@ -110,15 +110,15 @@ class WanBackend:
             else:
                 logger.info("VRAM >=24GB for 14B model: enabling model CPU offload")
                 self._pipe.enable_model_cpu_offload()
-        else:
-            if vram_gb is not None and vram_gb < 8:
-                logger.info("VRAM <8GB: enabling sequential CPU offload")
+        else:  # 1.3B model
+            if vram_gb is not None and vram_gb < 6:
+                logger.info("VRAM <6GB for 1.3B model: enabling sequential CPU offload")
                 self._pipe.enable_sequential_cpu_offload()
-            elif vram_gb is not None and vram_gb < 16:
-                logger.info("VRAM <16GB: enabling model CPU offload")
+            elif vram_gb is not None and vram_gb < 8:
+                logger.info("VRAM <8GB for 1.3B model: enabling model CPU offload")
                 self._pipe.enable_model_cpu_offload()
             else:
-                logger.info("VRAM >=16GB: full GPU mode")
+                logger.info("VRAM >=8GB for 1.3B model: full GPU mode (no CPU offload)")
                 self._pipe.to(self._device)
 
     def max_frames_for_vram(self) -> int:

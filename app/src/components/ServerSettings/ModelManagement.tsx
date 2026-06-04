@@ -95,6 +95,16 @@ const MODEL_DESCRIPTIONS: Record<string, string> = {
     'CogVideoX 2B T2V by THUDM. Text-to-video generation from prompt alone. Lighter than the 5B variant, requires ~5 GB VRAM.',
   'wan-t2v-1.3b':
     'Wan2.1 T2V 1.3B by Wan-AI. Lightweight text-to-video model with good quality-to-size ratio. Requires ~3 GB VRAM.',
+  'wan-i2v-14b':
+    'Wan2.1 I2V 14B (480P) by Wan-AI. High-quality image-to-video continuation matching the Wan2.1 quality. Requires ~16 GB VRAM with optimizations.',
+  'ltx-video':
+    'LTX-Video by Lightricks. Highly efficient, ultra-fast text-to-video and image-to-video transformer model. Natively supports variable resolutions, requires ~8 GB VRAM.',
+  'hunyuan-video':
+    'HunyuanVideo by Tencent. State-of-the-art 3D DiT text-to-video model with high motion realism and 720p output. Requires ~16-24 GB VRAM.',
+  'mochi-1-preview':
+    'Mochi-1 Preview by Genmo. Advanced text-to-video model with high motion dynamics and physical fidelity. Requires ~16-24 GB VRAM.',
+  'svd-xt':
+    'Stable Video Diffusion XT by Stability AI. Classic, highly stable image-to-video model for generating short, coherent continuations. Requires ~8 GB VRAM.',
 };
 
 function formatDownloads(n: number): string {
@@ -416,7 +426,11 @@ export function ModelManagement() {
     modelStatus?.models.filter(
       (m) =>
         m.model_name.startsWith('cogvideo') ||
-        m.model_name.startsWith('wan-'),
+        m.model_name.startsWith('wan-') ||
+        m.model_name.startsWith('ltx') ||
+        m.model_name.startsWith('hunyuan') ||
+        m.model_name.startsWith('mochi') ||
+        m.model_name.startsWith('svd'),
     ) ?? [];
   const voiceModels =
     modelStatus?.models.filter(
