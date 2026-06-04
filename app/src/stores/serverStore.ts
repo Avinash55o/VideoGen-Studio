@@ -34,7 +34,7 @@ export function getDefaultServerUrl(): string {
     return fallback;
   }
 
-  const { protocol, origin, hostname } = window.location;
+  const { protocol, origin } = window.location;
   if (
     (protocol === 'http:' || protocol === 'https:') &&
     origin

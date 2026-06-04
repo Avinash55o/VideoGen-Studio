@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { PromptInput } from './PromptInput';
 import { ModelSelector } from './ModelSelector';
@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { apiClient } from '@/lib/api/client';
 import { useGenerationProgress } from '@/lib/hooks/useGeneration';
 import type { ClipResponse } from '@/lib/api/types';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface VideoGenFormProps {
   projectId: string;
@@ -18,6 +19,7 @@ interface VideoGenFormProps {
 
 export function VideoGenForm({ projectId, onClipCreated: _onClipCreated }: VideoGenFormProps) {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [prompt, setPrompt] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
   const [model, setModel] = useState('cogvideo-2b');
@@ -29,6 +31,25 @@ export function VideoGenForm({ projectId, onClipCreated: _onClipCreated }: Video
 
   const { progress, status } = useGenerationProgress(taskId);
   const isGenerating = status === 'generating' || status === 'queued';
+
+  useEffect(() => {
+    if (status === 'complete') {
+      queryClient.invalidateQueries({ queryKey: ['projects', projectId, 'clips'] });
+      toast({
+        title: 'Video generated successfully',
+        description: 'The video clip has been added to your timeline.',
+      });
+      setTaskId(null);
+      setPrompt('');
+    } else if (status === 'error') {
+      toast({
+        title: 'Video generation failed',
+        description: progress?.error || 'An unknown error occurred during video generation.',
+        variant: 'destructive',
+      });
+      setTaskId(null);
+    }
+  }, [status, progress, projectId, queryClient, toast]);
 
   async function handleGenerate() {
     if (!prompt.trim()) return;

@@ -1,0 +1,61 @@
+services:
+  # One-shot init container: ensures the HuggingFace cache volume is owned
+  # by the videogen user (UID 999) before the main server starts.
+  # This prevents PermissionError on fresh volumes or after docker volume rm.
+  init-perms:
+    image: alpine:3
+    user: root
+    volumes:
+      - huggingface-cache:/hf-cache
+    command: sh -c "chown -R 999:999 /hf-cache && chmod -R 755 /hf-cache"
+    restart: "no"
+
+  videogen:
+    build: .
+    container_name: videogen-studio
+    restart: unless-stopped
+    depends_on:
+      init-perms:
+        condition: service_completed_successfully
+
+    ports:
+      # Bind to localhost only for security
+      - "127.0.0.1:17493:17493"
+
+    volumes:
+      # Bind-mount for generated audio (customize the host path as needed)
+      # Host side:      ./output/
+      # Container side: /app/data/generations/
+      - ./output:/app/data/generations
+
+      # Named volume for profiles, DB, cache (persists across container restarts)
+      - videogen-data:/app/data
+
+      # HuggingFace model cache (so models aren't re-downloaded on rebuild)
+      - huggingface-cache:/home/videogen/.cache/huggingface
+
+    environment:
+      - LOG_LEVEL=info
+      - NUMBA_CACHE_DIR=/tmp/numba_cache
+
+    networks:
+      - videogen-net
+
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+networks:
+  videogen-net:
+    driver: bridge
+
+volumes:
+  videogen-data:
+  huggingface-cache:

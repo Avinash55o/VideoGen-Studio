@@ -1,0 +1,66 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Dependencies & build artifacts (rebuilt in Docker)
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.spec
+output/
+
+# Data (will be bind-mounted or created in container)
+data/
+backend/data/
+backend/venv/
+backend/__pycache__/
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs & temporary files
+*.log
+*.tmp
+*.temp
+
+# Configuration files not needed in container (but keep if needed for build)
+# Note: Dockerfile copies package.json, bun.lock, CHANGELOG.md, backend/requirements.txt
+# So we should NOT ignore those.
+# However, we ignore the following as they are not needed for the build/runtime:
+.biomeignore
+biome.json
+.bumpversion.cfg
+.mcp.json
+.npmrc
+justfile
+scripts/
+.agents/
+docker-compose.yml
+Dockerfile
+README.md
+CONTRIBUTING.md
+SECURITY.md
+LICENSE
+
+# Test files (if any)
+# backend/tests/ is needed? Actually Dockerfile copies entire backend/, so tests are included.
+# If we want to exclude tests, we could add backend/tests/ but it's usually small and harmless.
+# We'll keep them for now.
+
+# Misc
+.packages
+.yarnrc
+.yarnrc.yml
+yarn.lock
+pnpm-lock.yaml

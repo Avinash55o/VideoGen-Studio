@@ -3,6 +3,7 @@ import { Clapperboard, Music, Mic } from 'lucide-react';
 import { TransportControls } from './TransportControls';
 import { SubtitleOverlay } from './SubtitleOverlay';
 import type { ClipResponse, SubtitleItem } from '@/lib/api/types';
+import { useServerStore } from '@/stores/serverStore';
 
 interface VideoPreviewProps {
   clips: ClipResponse[];
@@ -16,7 +17,8 @@ interface VideoPreviewProps {
 
 function getAudioUrl(clip: ClipResponse): string | null {
   if (!clip.source_path) return null;
-  return `/api/projects/${clip.project_id}/clips/${clip.id}/audio`;
+  const serverUrl = useServerStore.getState().serverUrl;
+  return `${serverUrl}/api/projects/${clip.project_id}/clips/${clip.id}/audio`;
 }
 
 export function VideoPreview({
