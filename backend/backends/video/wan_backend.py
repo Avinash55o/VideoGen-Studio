@@ -53,17 +53,22 @@ class WanBackend:
 
     def _load_model_sync(self, model_size: str) -> None:
         from diffusers import WanPipeline
+        from backend.backends.base import is_model_cached, model_load_progress
 
         repo = "Wan-AI/Wan2.1-T2V-1.3B"
         logger.info("Loading Wan2.1 from %s", repo)
 
-        self._pipe = WanPipeline.from_pretrained(
-            repo,
-            torch_dtype=self._dtype,
-        )
-        self._apply_memory_optimizations()
-        self._model_size = model_size
-        logger.info("Wan2.1 model loaded (device=%s)", self._device)
+        model_name = "wan-t2v-1.3b"
+        is_cached = is_model_cached(repo)
+
+        with model_load_progress(model_name, is_cached):
+            self._pipe = WanPipeline.from_pretrained(
+                repo,
+                torch_dtype=self._dtype,
+            )
+            self._apply_memory_optimizations()
+            self._model_size = model_size
+            logger.info("Wan2.1 model loaded (device=%s)", self._device)
 
     def _apply_memory_optimizations(self) -> None:
         vram_gb = get_vram_gb()

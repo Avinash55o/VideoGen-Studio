@@ -58,8 +58,14 @@ class CogVideoBackend:
         self._dtype = torch.float16 if self._device == "cuda" else torch.bfloat16
 
     def _hf_repo_for_size(self, model_size: str) -> str:
+        # Normalize model size and fallbacks (like "default" or engine IDs)
+        if model_size in ("default", "cogvideo", "cogvideo-2b", "cogvideo-2b-t2v"):
+            model_size = "2B"
+        elif model_size in ("cogvideo-5b", "cogvideo-5b-i2v"):
+            model_size = "5B"
+
         for cfg in self.MODEL_CONFIGS:
-            if cfg.model_size == model_size:
+            if cfg.model_size == model_size or cfg.model_name == model_size or cfg.engine == model_size:
                 return cfg.hf_repo_id
         raise ValueError(f"Unknown model size: {model_size}")
 
@@ -100,18 +106,23 @@ class CogVideoBackend:
 
     def _load_model_sync(self, model_size: str) -> None:
         from diffusers import CogVideoXPipeline
+        from backend.backends.base import is_model_cached, model_load_progress
 
         repo = self._hf_repo_for_size(model_size)
         logger.info("Loading CogVideoX from %s", repo)
 
-        self._pipe = CogVideoXPipeline.from_pretrained(
-            repo,
-            torch_dtype=self._dtype,
-            variant="bf16" if self._dtype == torch.bfloat16 else "fp16",
-        )
-        self._apply_memory_optimizations()
-        self._model_size = model_size
-        logger.info("CogVideoX model loaded (size=%s, device=%s)", model_size, self._device)
+        model_name = "cogvideo-2b-t2v" if model_size == "2B" else "cogvideo-5b-i2v"
+        is_cached = is_model_cached(repo)
+
+        with model_load_progress(model_name, is_cached):
+            self._pipe = CogVideoXPipeline.from_pretrained(
+                repo,
+                torch_dtype=self._dtype,
+                variant="bf16" if self._dtype == torch.bfloat16 else "fp16",
+            )
+            self._apply_memory_optimizations()
+            self._model_size = model_size
+            logger.info("CogVideoX model loaded (size=%s, device=%s)", model_size, self._device)
 
     async def generate(
         self,
